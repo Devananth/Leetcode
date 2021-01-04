@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int ans = 0 ;
+    
+    void permute(vector<int> arr , int ind )
+    {
+        if(ind == arr.size())
+        {
+            ++ans;
+            return;
+        }      
+        
+        for(int i = ind ; i<arr.size() ; i++)
+        {
+            swap(arr[i] , arr[ind]);
+            
+            if(arr[ind]%(ind+1)==0 || (ind+1)%arr[ind]==0)
+                permute(arr , ind+1);
+            
+            swap(arr[i],arr[ind]);
+        }
+    }
+    int countArrangement(int n) {
+        
+        vector<int> arr;
+        
+        for(int i = 1; i<=n ; i++)
+            arr.push_back(i);
+        
+        permute(arr , 0);
+        
+        return ans;
+    }
+};
