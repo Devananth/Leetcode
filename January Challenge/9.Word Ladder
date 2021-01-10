@@ -1,0 +1,53 @@
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        
+        unordered_set < string > dict(wordList.begin() , wordList.end());
+        
+        int ladder = 1 ;
+        
+        if(dict.find(endWord)==dict.end())
+            return 0;
+        
+        queue <string> qu;
+        
+        qu.push(beginWord);
+        
+        while(!qu.empty())
+        {
+            int len = qu.size();
+            
+            for(int i = 0 ; i<len ; i++)
+            {
+                string s = qu.front() ;
+                
+                qu.pop();
+                
+                if(s==endWord)
+                    return ladder;
+                
+                for(int ind = 0 ; ind<s.size() ; ind++)
+                {
+                    char ch = s[ind];
+                    
+                    for(int c = 'a' ; c<='z' ; c++)
+                    {
+                        s[ind]=c;
+                        if(dict.find(s)!=dict.end())
+                        {
+                            qu.push(s);
+                            dict.erase(s);
+                        }
+                    }
+                    
+                    s[ind] = ch;
+                }
+            }
+            
+            ++ladder;
+        }
+        
+        return 0;
+        
+    }
+};
