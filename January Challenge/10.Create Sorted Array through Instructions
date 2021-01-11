@@ -1,0 +1,47 @@
+//Learned new data structure "FENWICK TREE or BINARY INDEX TREE"
+
+class Solution {
+public:
+    int fen[1000001];
+    
+    void update(int val)
+    {
+        while(val < 1e5+1)
+        {
+            fen[val]++;
+            val = val + (val&(-val));
+        }
+        
+    }
+    
+    int get(int val)
+    {
+        int cnt = 0;
+        
+        while(val>0)
+        {
+            cnt+=fen[val];
+            val = val - (val&(-val));
+        }
+        
+        return cnt;
+    }
+    
+    int createSortedArray(vector<int>& arr) {
+        
+        int n = arr.size() ,  ans = 0 , mod = 1e9+7;
+        
+        for(int i = 0 ; i<n ; i++)
+        {
+            int small = get(arr[i]-1) , large = i - get(arr[i]);
+            
+            ans+=min(small , large);
+            
+            ans%=mod;
+            
+            update(arr[i]);
+        }
+        
+        return ans;
+    }
+};
