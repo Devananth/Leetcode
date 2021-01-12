@@ -1,0 +1,21 @@
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        
+        for(int i : nums2)
+        {
+            int ind = m-1;
+            
+            while(ind>=0 &&  nums1[ind] > i )
+            {
+                nums1[ind+1] = nums1[ind];
+                ind--;
+            }
+          
+            ++m;
+            
+            nums1[ind+1]=i;
+        }
+            
+    }
+};
