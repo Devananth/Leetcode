@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int getMaximumGenerated(int n) {
+        
+        vector<int> temp;
+        
+        if(n<=1)
+            return n;
+        
+        temp.push_back(0);
+        
+        temp.push_back(1);
+        
+        for(int i = 1 ; temp.size()<=n+1 ; i++)
+        {
+            temp.push_back(temp[i]);
+            
+            temp.push_back(temp[i] + temp[i+1]);
+        }
+        
+        temp.resize(n+1);
+        
+        return *max_element(temp.begin() , temp.end());
+        
+    }
+};
