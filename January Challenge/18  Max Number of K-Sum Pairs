@@ -1,0 +1,66 @@
+class Solution {
+public:
+    int maxOperations(vector<int>& nums, int k) {
+        
+        
+        /* Method 1  : Hashing  
+                       Time Complexity : O(N)
+                       Space Complexity : O(N)
+                       
+        */
+        
+        unordered_map<int,int> mp;
+        
+        int ans = 0 ;
+        
+        for(int i : nums)
+        {
+             mp[i]++;
+             
+             if(k-i==i && mp[i]<=1)
+                continue;
+             
+             if(mp[i] && mp[k-i])
+             {
+                ++ans;
+                mp[i]--;
+                --mp[k-i];
+             }
+        }
+        
+        return ans;
+        
+    
+        
+        /*Method 2 : Two Pointers 
+                     Time Complexity : O(NlogN)
+                     Space Complexity : O(1)
+                     
+        */
+        
+        ans = 0 ;
+        
+        sort(nums.begin() , nums.end());
+        
+        int left = 0 , right = nums.size()-1 ;
+        
+        while(left < right)
+        {
+            int val = nums[left] + nums[right];
+            
+            if(val==k)
+            {
+                ++ans;
+                ++left;
+                --right;
+            }
+            else if(val > k)
+                right--;
+            else
+                left++;
+        }
+        
+        return ans;
+        
+    }
+};
