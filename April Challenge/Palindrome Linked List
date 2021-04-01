@@ -1,0 +1,70 @@
+    /* Brute Force : Store the elements in a array or vector
+                     Check the array is palindrome or not 
+
+                     Time Complexity : O(N)
+                     Space Complexity : O(N)
+                 
+   Better Approach : Inorder , to reduce the space complexity
+                     i)   Find the middle element of linked list
+                     ii)  Reverse the second half of linked list
+                     iii) Compare the two lists
+                     
+                   Time Complexity : O(N)
+                   Space Complexity : O(1)
+                   
+ */
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverse(ListNode *node)
+    {
+        ListNode *prev = NULL , *curr = node , *next = NULL;
+        
+        while(curr)
+        {
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        
+        return prev;
+        
+    }
+    bool isPalindrome(ListNode* head) {
+        
+        ListNode *slow = head , *fast = head;
+        
+        while(fast->next && fast->next->next)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        
+        ListNode *head2 = reverse(slow->next) , *head1 = head;
+        
+        while(head2)
+        {
+            if(head1->val != head2->val)
+                 return false;
+            
+            head1 = head1->next;
+            
+            head2 = head2->next;
+
+        }
+        
+        return true;
+    }
+};
